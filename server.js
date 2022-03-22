@@ -8,6 +8,7 @@ require('./config/database');
 
 var indexRouter = require('./routes/index');
 var flightsRouter = require('./routes/flights');
+const ticketsRouter = require('./routes/tickets')
 
 var app = express();
 
@@ -24,6 +25,7 @@ app.use(methodOverride('_method'));
 
 app.use('/', indexRouter);
 app.use('/flights', flightsRouter);
+app.use('/', ticketsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -19,15 +19,23 @@
     </ul>
     <form action="/flights/<%= flight._id %>?_method=PUT" method="post">
       <select name="airport">
-        <option value="AUS">AUS</option>
-        <option value="DFW">DFW</option>
-        <option value="DEN" selected>DEN</option>
-        <option value="LAX">LAX</option>
-        <option value="SAN">SAN</option>
+        <% ['AUS', 'DFW', 'DEN', 'LAX', 'SAN'].forEach(function(airport){ %>
+          <% if(airport !== flight.airport){ %>
+            <option value="<%= airport %>"><%= airport %></option>
+          <% } %>
+        <% }) %>
       </select>
       <input type="datetime-local" name="arrival">
       <input type="submit" value="Add Destination">
     </form>
+    <ul>
+      <% tickets.forEach(function(t){ %>
+        <li>
+          <%= t.seat %> - <%= t.price %>
+        </li>
+      <% }) %>
+    </ul>
+    <a href="/flights/<%= flight._id %>/tickets/new">New Ticket</a>
   </section>
 
 <%- include('../partials/footer') %>

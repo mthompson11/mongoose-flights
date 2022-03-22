@@ -1,5 +1,6 @@
 const methodOverride = require('method-override');
 const Flight = require('../models/flight');
+const ticket = require('../models/ticket');
 
 function index(req, res){
     Flight.find({}, function(err, flights){
@@ -18,18 +19,20 @@ function index(req, res){
 
 function show(req, res){
     Flight.findById(req.params.id, function(err, flight){
-        if(flight.destinations.length > 1){
-            flight.destinations.sort(function(a,b){
-                if(a.arrival > b.arrival){
-                    return 1
-                }
-                if(a.arrival < b.arrival){
-                    return -1
-                }
-                return 0
-            })
-        }
-        res.render('flights/show', {title:'Flight Detail', flight});
+        ticket.find({flight: flight._id}, function(err, tickets){
+            if(flight.destinations.length > 1){
+                flight.destinations.sort(function(a,b){
+                    if(a.arrival > b.arrival){
+                        return 1
+                    }
+                    if(a.arrival < b.arrival){
+                        return -1
+                    }
+                    return 0
+                })
+            }
+            res.render('flights/show', {title:'Flight Detail', flight, tickets});
+        })
     })
 }
 
