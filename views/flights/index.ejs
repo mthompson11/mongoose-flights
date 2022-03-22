@@ -2,11 +2,12 @@
 <table>
     <tbody>
         <% flights.forEach(function(f){ %>
-            <tr>
+            <tr <%- f.departs < new Date() ? 'class="passed"' : '' %>>
                 <td><%= f.airline %></td>
                 <td><%= f.airport %></td>
                 <td><%= f.flightNo %></td>
                 <td><%= f.departs %></td>
+                <td><a href="/flights/<%= f._id %>">DETAILS</a></td>
             </tr>
         <% }) %>
     </tbody>
