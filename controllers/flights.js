@@ -18,6 +18,17 @@ function index(req, res){
 
 function show(req, res){
     Flight.findById(req.params.id, function(err, flight){
+        if(flight.destinations.length > 1){
+            flight.destinations.sort(function(a,b){
+                if(a.arrival > b.arrival){
+                    return 1
+                }
+                if(a.arrival < b.arrival){
+                    return -1
+                }
+                return 0
+            })
+        }
         res.render('flights/show', {title:'Flight Detail', flight});
     })
 }
@@ -38,9 +49,19 @@ function create (req,res){
     });
 };
 
+function update(req,res){
+    Flight.findById(req.params.id, function(err,flight){
+        flight.destinations.push(req.body);
+        flight.save(function(err){
+            res.redirect(`/flights/${flight.id}`)
+        })
+    })
+};
+
 module.exports = {
     index,
     show,
     new: newFlight,
-    create
+    create,
+    update
 }
