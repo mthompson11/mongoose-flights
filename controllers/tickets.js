@@ -3,8 +3,8 @@ const Flight = require('../models/flight');
 const Ticket = require('../models/ticket');
 
 function newTicket(req, res){
-    console.log(req.params.id);
     res.render('tickets/new', {
+        title: 'New Ticket',
         flight: req.params.id
     });
 };
